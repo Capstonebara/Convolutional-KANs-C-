@@ -115,8 +115,8 @@ torch::Tensor KANLinear::curve2coeff(torch::Tensor& x, torch::Tensor& y) {
     assert(result.size(1) == in_features);
     assert(result.size(2) == grid_size + spline_order);
     
-    // return result.contiguous();
-    return torch::zeros({out_features, in_features, grid_size + spline_order});
+    return result.contiguous();
+    // return torch::zeros({out_features, in_features, grid_size + spline_order});
 
 }
 
