@@ -12,8 +12,9 @@ public:
               double grid_eps = 0.02, std::pair<double, double> grid_range = {-1, 1});
 
     void reset_parameters(); // Initializes parameters
-    torch::Tensor b_splines(torch::Tensor& x); // B-spline computation
-    torch::Tensor curve2coeff(torch::Tensor& x, torch::Tensor& y); // Interpolation coefficients
+    torch::Tensor b_splines(const torch::Tensor& x); // B-spline computation
+    torch::Tensor curve2coeff(const torch::Tensor& x, const torch::Tensor& y); // Interpolation coefficients
+    torch::Tensor scaled_spline_weight();
     torch::Tensor forward(const torch::Tensor& x); // Forward pass
     void update_grid(const torch::Tensor& x, double margin = 0.01); // Updates the grid
     torch::Tensor regularization_loss(double regularize_activation = 1.0, double regularize_entropy = 1.0); // Loss computation
@@ -22,6 +23,7 @@ public:
     torch::Tensor get_base_weight() const { return base_weight; }
     torch::Tensor get_spline_weight() const { return spline_weight; }
     torch::Tensor get_spline_scaler() const { return spline_scaler; }
+    torch::Tensor get_grid() const { return grid; } // Getter for grid
     bool is_enable_standalone_scale_spline() const { return enable_standalone_scale_spline; }
 
 private:
