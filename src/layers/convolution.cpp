@@ -36,37 +36,34 @@ std::tuple<int, int, int, int> calc_out_dims(
     return {h_out, w_out, batch_size, n_channels};
 }
 
-torch::Tensor multiple_convs_kan_conv2d(
-    const torch::Tensor& matrix,
-    const std::vector<std::shared_ptr<torch::nn::Module>>& kernels,
-    int kernel_side,
-    int out_channels,
-    const std::tuple<int, int>& stride,
-    const std::tuple<int, int>& dilation,
-    const std::tuple<int, int>& padding,
-    const std::string& device
-) {
-    // Determine device availability
-    bool use_cuda = (device == "cuda" && torch::cuda::is_available());
-    torch::Device torch_device = use_cuda ? torch::kCUDA : torch::kCPU;
+torch::Tensor multiple_convs_kan_conv2d() {
+    torch::Tensor x;
 
-    // Move inputs to the selected device
-    auto matrix_on_device = matrix.to(torch_device);
-
-    // Allocate output tensor on the selected device
-    // (Placeholder: adjust dimensions as needed when implementing logic)
-    torch::Tensor output = torch::zeros({1, 1, 1, 1}, torch_device);
-
-    // Placeholder: Implement convolution logic here
-    // Ensure all computations are performed on `torch_device`
-
-    return output;
+    return x;
 }
 
-torch::Tensor add_padding(
-    const torch::Tensor& matrix,
-    const std::tuple<int, int>& padding
-) {
-    // Logic to be implemented
-    return torch::Tensor(); // Placeholder
+
+torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding) {
+
+    int r = padding.first;
+    int c = padding.second;
+
+    int n = matrix.size(0);
+    int m = matrix.size(1);
+
+    torch::Tensor padded_matrix = torch::zeros({n + 2 * r, m + 2 * c}, matrix.options());
+
+    padded_matrix.slice(0, r, n + r).slice(1, c, m + c) = matrix;
+
+    return padded_matrix;
+}
+
+void kan_conv2d(const torch::Tensor& x,
+                const torch::Tensor& conv,
+                const torch::Tensor& param,
+                const std::vector<int64_t>& stride,
+                const std::vector<int64_t>& dilation,
+                const std::vector<int64_t>& padding,
+                torch::Device device) {
+    return; // return None
 }

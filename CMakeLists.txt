@@ -1,11 +1,14 @@
-cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(CheckLibTorch)
+cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+project(CKan)
 
 # Ensure CUDA is not being enabled
 set(CMAKE_CUDA_COMPILER "" CACHE STRING "CUDA compiler" FORCE)
 
-# Set path to the libtorch library
-set(Torch_DIR "/home/nhomnhom0/miniforge3/envs/Conv-KAN-env/lib/python3.9/site-packages/torch/share/cmake/Torch")
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Specify the location of the libtorch directory
+set(Torch_DIR "/home/thainq/Desktop/capstone/CPlusConvert/libtorch/share/cmake/Torch")
 
 # Find the PyTorch package
 find_package(Torch REQUIRED)
@@ -14,11 +17,17 @@ find_package(Torch REQUIRED)
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${CMAKE_SOURCE_DIR}/layers)
 
+
 # Add the executable
-add_executable(test src/layers/KAN_linear.cpp tests/test_reset_parameters.cpp)
+add_executable(CKan main.cpp
+        src/layers/convolution.cpp
+        include/layers/convolution.h
+        src/layers/KAN_linear.cpp
+        include/layers/KAN_linear.h
+)
 
-# Link to PyTorch (CPU-only version)
-target_link_libraries(test "${TORCH_LIBRARIES}")
+# Link the PyTorch library
+target_link_libraries(CKan "${TORCH_LIBRARIES}")
 
-# Set C++ standard to 17 (required by PyTorch)
-set_property(TARGET test PROPERTY CXX_STANDARD 17)
+# Set the C++ flags (using C++20)
+set_property(TARGET CKan PROPERTY CXX_STANDARD 20)

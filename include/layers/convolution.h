@@ -14,20 +14,16 @@ std::tuple<int, int, int, int> calc_out_dims(
     const std::tuple<int, int>& padding
 );
 
-torch::Tensor multiple_convs_kan_conv2d(
-    const torch::Tensor& matrix,
-    const std::vector<std::shared_ptr<torch::nn::Module>>& kernels,
-    int kernel_side,
-    int out_channels,
-    const std::tuple<int, int>& stride = {1, 1},
-    const std::tuple<int, int>& dilation = {1, 1},
-    const std::tuple<int, int>& padding = {0, 0},
-    const std::string& device = "cuda"
-);
+at::Tensor multiple_convs_kan_conv2d(
+    const at::Tensor& matrix,
+    const std::vector<std::shared_ptr<torch::nn::Conv2d>>& kernels,
+    int64_t kernel_side,
+    int64_t out_channels,
+    const std::pair<int64_t, int64_t>& stride = {1, 1},
+    const std::pair<int64_t, int64_t>& dilation = {1, 1},
+    const std::pair<int64_t, int64_t>& padding = {0, 0},
+    const torch::Device& device = torch::kCUDA);
 
-torch::Tensor add_padding(
-    const torch::Tensor& matrix,
-    const std::tuple<int, int>& padding
-);
+torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding);
 
 #endif // CONVOLUTION_H
