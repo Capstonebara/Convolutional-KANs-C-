@@ -98,7 +98,7 @@ torch::Tensor KANLinear::curve2coeff(const torch::Tensor& x, const torch::Tensor
     // Calculate B-splines and transpose
     torch::Tensor A = b_splines(x);  // Shape: [batch_size, in_features, grid_size + spline_order]
     // std::cout << "A shape after b_splines: " << A.sizes() << std::endl;
-    
+
     A = A.transpose(0, 1);  // Shape: [in_features, batch_size, grid_size + spline_order]
     torch::Tensor B = y.transpose(0, 1);  // Shape: [in_features, batch_size, out_features]
     // std::cout << "B shapes " << B.sizes() << std::endl;
@@ -114,18 +114,18 @@ torch::Tensor KANLinear::curve2coeff(const torch::Tensor& x, const torch::Tensor
     // auto lstsq_result = torch::linalg::lstsq(A, B, 1e-10, nullptr);
     // std::cout << "done lstsq"<< std::endl;
     // auto solution = std::get<0>(lstsq_result);  // Shape: [in_features, grid_size + spline_order, out_features]
-    
+
     //using torch::linalg::pinv instead of torch::linalg::lstsq
     // torch::Tensor pseudo_inverse = torch::linalg::pinv(A);
     // torch::Tensor solution = torch::matmul(pseudo_inverse, B);
 
     // // Permute to get final shape
     torch::Tensor result = solution.permute({2, 0, 1});  // Shape: [out_features, in_features, grid_size + spline_order]
-    
+
     assert(result.size(0) == out_features);
     assert(result.size(1) == in_features);
     assert(result.size(2) == grid_size + spline_order);
-    
+
     return result.contiguous();
     // return torch::zeros({out_features, in_features, grid_size + spline_order});
 
@@ -134,7 +134,7 @@ torch::Tensor KANLinear::curve2coeff(const torch::Tensor& x, const torch::Tensor
 torch::Tensor KANLinear::scaled_spline_weight() {
     if (enable_standalone_scale_spline) {
         return spline_weight * spline_scaler.unsqueeze(-1); // Broadcast the scaler across the weight tensor
-    } 
+    }
     else {
         return spline_weight; // No scaling applied
     }

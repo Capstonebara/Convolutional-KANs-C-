@@ -1,7 +1,7 @@
 #ifndef KAN_LINEAR_H
 #define KAN_LINEAR_H
 
-#include </home/nhomnhom0/miniforge3/pkgs/pytorch-2.5.1-py3.9_cpu_0/lib/python3.9/site-packages/torch/include/torch/csrc/api/include/torch/torch.h>
+#include <torch/torch.h>
 
 class KANLinear : public torch::nn::Module {
 public:
@@ -45,4 +45,5 @@ private:
     torch::Tensor spline_scaler; // Spline scaler tensor (if enabled)
 };
 
-#endif // KAN_LINEAR_H
+
+#endif //KAN_LINEAR_H
