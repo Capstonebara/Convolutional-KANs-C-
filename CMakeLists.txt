@@ -2,13 +2,13 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(CKan)
 
 # Ensure CUDA is not being enabled
-set(CMAKE_CUDA_COMPILER "" CACHE STRING "CUDA compiler" FORCE)
+# set(CMAKE_CUDA_COMPILER "" CACHE STRING "CUDA compiler" FORCE)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Specify the location of the libtorch directory
-set(Torch_DIR "/home/thainq/Desktop/capstone/CPlusConvert/libtorch/share/cmake/Torch")
+set(Torch_DIR "/Users/daoxuanbac/libtorch/share/cmake/Torch")
 
 # Find the PyTorch package
 find_package(Torch REQUIRED)
@@ -24,6 +24,8 @@ add_executable(CKan main.cpp
         include/layers/convolution.h
         src/layers/KAN_linear.cpp
         include/layers/KAN_linear.h
+        src/layers/KAN_convolution.cpp
+        include/layers/KAN_convolution.h
 )
 
 # Link the PyTorch library
