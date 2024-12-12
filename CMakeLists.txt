@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Specify the location of the libtorch directory
-set(Torch_DIR "/Users/daoxuanbac/libtorch/share/cmake/Torch")
+set(Torch_DIR "/home/thainq/Desktop/capstone/CPlusConvert/libtorch/share/cmake/Torch")
 
 # Find the PyTorch package
 find_package(Torch REQUIRED)
@@ -19,14 +19,14 @@ include_directories(${CMAKE_SOURCE_DIR}/layers)
 
 
 # Add the executable
-add_executable(CKan main.cpp
+add_executable(CKan
+        main.cpp
         src/layers/convolution.cpp
         include/layers/convolution.h
         src/layers/KAN_linear.cpp
         include/layers/KAN_linear.h
         src/layers/KAN_convolution.cpp
-        include/layers/KAN_convolution.h
-)
+        include/layers/KAN_convolution.h)
 
 # Link the PyTorch library
 target_link_libraries(CKan "${TORCH_LIBRARIES}")

@@ -35,21 +35,20 @@ KAN_Convolution::KAN_Convolution(
          base_activation, 
          grid_eps, 
          grid_range) {
-
-    
 };
 
 torch::Tensor KAN_Convolution::forward(const torch::Tensor& x) {
     this->device = x.device().str();
-    torch::Tensor output = convolution::kan_conv2d(
-        x,
-        this->conv,
-        this->kernel_size,
-        this->stride,
-        this->dilation,
-        this->padding,
-        this->device
-    );
+//    torch::Tensor output = convolution::kan_conv2d(
+//        x,
+//        this->conv,
+//        this->kernel_size,
+//        this->stride,
+//        this->dilation,
+//        this->padding,
+//        this->device
+//    );
+    torch::Tensor output = conv.forward(x);
     return output;
 }
 
@@ -110,6 +109,22 @@ KAN_Convolution_Layer::KAN_Convolution_Layer(
 
 torch::Tensor KAN_Convolution_Layer::forward(const torch::Tensor& x) {
     this->device = x.device().str();
-    torch::Tensor output = convolution::multiple_convs_kan_conv2d();
+
+        // Convert ModuleList to std::vector<std::shared_ptr<KAN_Convolution>>
+    std::vector<std::shared_ptr<KAN_Convolution>> kernel_vec;
+    for (const auto& module : *convs) {
+        kernel_vec.push_back(std::dynamic_pointer_cast<KAN_Convolution>(module));
+    }
+
+    torch::Tensor output = convolution::multiple_convs_kan_conv2d(
+        x,                                   // Input tensor
+        kernel_vec,                            // Convolution kernels
+        kernel_size.first,                   // Kernel size
+        out_channels,                        // Number of output channels
+        stride,                              // Stride
+        dilation,                            // Dilation
+        padding,                             // Padding
+        torch::Device(device)                // Device
+    );
     return output;
 }

@@ -45,16 +45,38 @@ int main() {
 
     // Create a random tensor with appropriate dimensions (batch_size, channels, height, width)
     // Let's assume batch size of 2, 3 input channels, and a 4x4 image
-    torch::Tensor tensor = torch::rand({2, 3, 4, 4});  // [batch_size, channels, height, width]
+    torch::Tensor matrix = torch::tensor({
+        { { {0.1, 0.2, 0.3, 0.4, 0.5, 0.6},
+            {0.7, 0.8, 0.9, 1.0, 1.1, 1.2},
+            {1.3, 1.4, 1.5, 1.6, 1.7, 1.8},
+            {1.9, 2.0, 2.1, 2.2, 2.3, 2.4},
+            {2.5, 2.6, 2.7, 2.8, 2.9, 3.0},
+            {3.1, 3.2, 3.3, 3.4, 3.5, 3.6} },
+
+          { {0.5, 0.4, 0.3, 0.2, 0.1, 0.0},
+            {0.9, 0.8, 0.7, 0.6, 0.5, 0.4},
+            {1.3, 1.2, 1.1, 1.0, 0.9, 0.8},
+            {1.7, 1.6, 1.5, 1.4, 1.3, 1.2},
+            {2.1, 2.0, 1.9, 1.8, 1.7, 1.6},
+            {2.5, 2.4, 2.3, 2.2, 2.1, 2.0} },
+
+          { {0.6, 0.7, 0.8, 0.9, 1.0, 1.1},
+            {1.2, 1.3, 1.4, 1.5, 1.6, 1.7},
+            {1.8, 1.9, 2.0, 2.1, 2.2, 2.3},
+            {2.4, 2.5, 2.6, 2.7, 2.8, 2.9},
+            {3.0, 3.1, 3.2, 3.3, 3.4, 3.5},
+            {3.6, 3.7, 3.8, 3.9, 4.0, 4.1} }
+        }
+    });  // [batch_size, channels, height, width]
 
     // Print the input tensor
-    std::cout << "Input Tensor: " << tensor << std::endl;
+    // std::cout << "Input Tensor: " << tensor << std::endl;
 
     // Pass the tensor through the KAN_Convolution_Layer
-    torch::Tensor output = conv_layer.forward(tensor);
+    torch::Tensor output = conv_layer.forward(matrix);
 
     // Print the output tensor
-    std::cout << "Output Tensor: " << output << std::endl;
+    std::cout << "Output Tensor Shape: " << output.sizes() << std::endl;
 
     return 0;
 }
