@@ -68,7 +68,6 @@ torch::Tensor convolution::multiple_convs_kan_conv2d(
 
         for (int k_idx = 0; k_idx < kern_per_out; ++k_idx) {
             const auto& kernel = kernels[c_out * kern_per_out + k_idx];
-            auto conv_input = conv_groups.narrow(2, k_idx, 1).flatten(0, 1);
             auto conv_result = kernel->forward(conv_groups.index({torch::indexing::Slice(), k_idx, torch::indexing::Slice(), torch::indexing::Slice()})
                                                   .flatten(0, 1));
             out_channel_accum += conv_result.view({batch_size, h_out, w_out});
