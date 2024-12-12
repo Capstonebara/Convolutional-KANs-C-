@@ -36,14 +36,14 @@ std::tuple<int, int, int, int> calc_out_dims(
     return {h_out, w_out, batch_size, n_channels};
 }
 
-torch::Tensor multiple_convs_kan_conv2d() {
+torch::Tensor convolution::multiple_convs_kan_conv2d() {
     torch::Tensor x;
 
     return x;
 }
 
 
-torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding) {
+torch::Tensor convolution::add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding) {
 
     int r = padding.first;
     int c = padding.second;
@@ -58,12 +58,26 @@ torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>
     return padded_matrix;
 }
 
-void kan_conv2d(const torch::Tensor& x,
-                const torch::Tensor& conv,
-                const torch::Tensor& param,
-                const std::vector<int64_t>& stride,
-                const std::vector<int64_t>& dilation,
-                const std::vector<int64_t>& padding,
-                torch::Device device) {
-    return; // return None
-}
+// void kan_conv2d(const torch::Tensor& x,
+//                 const torch::Tensor& conv,
+//                 const torch::Tensor& param,
+//                 const std::vector<int64_t>& stride,
+//                 const std::vector<int64_t>& dilation,
+//                 const std::vector<int64_t>& padding,
+//                 torch::Device device) {
+//     return; // return None
+// }
+
+// Thai oi, Dung gen ra cho nay de test ham thoi nhe
+torch::Tensor convolution::kan_conv2d(
+        const torch::Tensor& x,
+        const KANLinear& conv,  // This matches the modified header
+        const std::pair<int, int>& kernel_size,
+        const std::pair<int, int>& stride,
+        const std::pair<int, int>& dilation,
+        const std::pair<int, int>& padding,
+        const std::string& device) {
+        // Create a dummy tensor with the same shape as input `x` for testing purposes.
+        torch::Tensor dummy_output = torch::zeros_like(x, torch::TensorOptions().device(device));
+        return dummy_output; // Return the dummy tensor
+    }
