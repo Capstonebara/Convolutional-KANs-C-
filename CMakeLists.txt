@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(CKan)
 
 # Ensure CUDA is not being enabled
-set(CMAKE_CUDA_COMPILER "" CACHE STRING "CUDA compiler" FORCE)
+# set(CMAKE_CUDA_COMPILER "" CACHE STRING "CUDA compiler" FORCE)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -19,12 +19,14 @@ include_directories(${CMAKE_SOURCE_DIR}/layers)
 
 
 # Add the executable
-add_executable(CKan main.cpp
+add_executable(CKan
+        main.cpp
         src/layers/convolution.cpp
         include/layers/convolution.h
         src/layers/KAN_linear.cpp
         include/layers/KAN_linear.h
-)
+        src/layers/KAN_convolution.cpp
+        include/layers/KAN_convolution.h)
 
 # Link the PyTorch library
 target_link_libraries(CKan "${TORCH_LIBRARIES}")

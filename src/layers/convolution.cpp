@@ -1,12 +1,13 @@
 #include "layers/convolution.h"
 #include <torch/torch.h>
+#include <layers/KAN_convolution.h>
 #include <vector>
 #include <tuple>
 #include <iostream>
 
 // Function definitions
 
-std::tuple<int, int, int, int> calc_out_dims(
+std::tuple<int, int, int, int> convolution::calc_out_dims(
     const torch::Tensor& matrix,
     int kernel_side,
     const std::tuple<int, int>& stride,
@@ -36,14 +37,48 @@ std::tuple<int, int, int, int> calc_out_dims(
     return {h_out, w_out, batch_size, n_channels};
 }
 
-torch::Tensor multiple_convs_kan_conv2d() {
-    torch::Tensor x;
+torch::Tensor convolution::multiple_convs_kan_conv2d(
+    const torch::Tensor& matrix,
+    const std::vector<std::shared_ptr<KAN_Convolution>>& kernels,
+    int kernel_side,
+    int out_channels,
+    const std::pair<int, int>& stride,
+    const std::pair<int, int>& dilation,
+    const std::pair<int, int>& padding,
+    const torch::Device& device
+) {
 
-    return x;
+    auto [h_out, w_out, batch_size, in_channels] = calc_out_dims(matrix, kernel_side, stride, dilation, padding);
+
+    auto matrix_out = torch::zeros({batch_size, out_channels, h_out, w_out}, torch::TensorOptions().device(device));
+
+    auto unfold = torch::nn::Unfold(torch::nn::UnfoldOptions({kernel_side, kernel_side})
+                                       .dilation({dilation.first, dilation.second})
+                                       .padding({padding.first, padding.second})
+                                       .stride({stride.first, stride.second}));
+
+    auto conv_groups = unfold(matrix)
+                          .view({batch_size, in_channels, kernel_side * kernel_side, h_out * w_out})
+                          .transpose(2, 3);
+
+    int kern_per_out = kernels.size() / out_channels;
+
+    for (int c_out = 0; c_out < out_channels; ++c_out) {
+        auto out_channel_accum = torch::zeros({batch_size, h_out, w_out}, torch::TensorOptions().device(device));
+
+        for (int k_idx = 0; k_idx < kern_per_out; ++k_idx) {
+            const auto& kernel = kernels[c_out * kern_per_out + k_idx];
+            auto conv_result = kernel->forward(conv_groups.index({torch::indexing::Slice(), k_idx, torch::indexing::Slice(), torch::indexing::Slice()})
+                                                  .flatten(0, 1));
+            out_channel_accum += conv_result.view({batch_size, h_out, w_out});
+        }
+        matrix_out.index_put_({torch::indexing::Slice(), c_out, torch::indexing::Slice(), torch::indexing::Slice()}, out_channel_accum);
+    }
+    return matrix_out;
 }
 
 
-torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding) {
+torch::Tensor convolution::add_padding(const torch::Tensor& matrix, const std::pair<int, int>& padding) {
 
     int r = padding.first;
     int c = padding.second;
@@ -58,12 +93,26 @@ torch::Tensor add_padding(const torch::Tensor& matrix, const std::pair<int, int>
     return padded_matrix;
 }
 
-void kan_conv2d(const torch::Tensor& x,
-                const torch::Tensor& conv,
-                const torch::Tensor& param,
-                const std::vector<int64_t>& stride,
-                const std::vector<int64_t>& dilation,
-                const std::vector<int64_t>& padding,
-                torch::Device device) {
-    return; // return None
-}
+// void kan_conv2d(const torch::Tensor& x,
+//                 const torch::Tensor& conv,
+//                 const torch::Tensor& param,
+//                 const std::vector<int64_t>& stride,
+//                 const std::vector<int64_t>& dilation,
+//                 const std::vector<int64_t>& padding,
+//                 torch::Device device) {
+//     return; // return None
+// }
+
+// Thai oi, Dung gen ra cho nay de test ham thoi nhe // ok bac
+torch::Tensor convolution::kan_conv2d(
+        const torch::Tensor& x,
+        const KANLinear& conv,  // This matches the modified header
+        const std::pair<int, int>& kernel_size,
+        const std::pair<int, int>& stride,
+        const std::pair<int, int>& dilation,
+        const std::pair<int, int>& padding,
+        const std::string& device) {
+        // Create a dummy tensor with the same shape as input `x` for testing purposes.
+        torch::Tensor dummy_output = torch::zeros_like(x, torch::TensorOptions().device(device));
+        return dummy_output; // Return the dummy tensor
+    }
