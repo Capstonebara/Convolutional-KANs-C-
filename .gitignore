@@ -1,4 +1,69 @@
-build
-cmake-build-debug
-.idea
-libtorch
+# Ignore build files
+/build/
+cmake-build-debug/
+cmake-build-release/
+
+# Ignore object files
+*.o
+*.obj
+*.so
+*.dylib
+*.dll
+
+# Ignore executables
+*.out
+*.exe
+
+# Ignore temporary files
+*.swp
+*.bak
+*.tmp
+
+# Ignore IDE/project files (for common editors)
+.vscode/
+.idea/
+*.iml
+
+# Ignore logs and caches
+*.log
+*.cache
+*.pid
+
+# Ignore compiled libraries
+*.lib
+*.a
+*.dylib
+
+# Ignore PyTorch related files (C++ API)
+libtorch/
+
+# Ignore generated files
+*.tgz
+*.tar.gz
+
+# Ignore Python virtual environment files
+env/
+venv/
+__pycache__/
+*.pyc
+
+# Ignore backup files
+*~ 
+
+# Ignore CMake-specific files
+CMakeCache.txt
+CMakeFiles/
+CMakeSettings.json
+*.cmake
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore Linux specific files
+*.swp
+
+# Ignore Windows specific files
+Thumbs.db
+
+.DS_Store
+
