@@ -1,7 +1,7 @@
 # Convolutional-KANs-C-
 C++ version of Convolutional KANs
 
-## Architectures
+## ⛩️ Architectures
 ### convolution
 ![image](images/convolution.png)
 ### conv_and_KAN
