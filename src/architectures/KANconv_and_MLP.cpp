@@ -2,7 +2,7 @@
 
 KANC_MLP::KANC_MLP(int grid_size)
     : conv1(1, 5, {3, 3}, {1, 1}, {0, 0}, {1, 1}, grid_size, 3, 0.1, 1.0, 1.0, torch::nn::SiLU(), 0.02, {-1, 1}, "cpu"),
-      conv2(5, 5, {3, 3}, {1, 1}, {0, 0}, {1, 1}, grid_size, 3, 0.1, 1.0, 1.0, torch::nn::SiLU(), 0.02, {-1, 1}, "cpu"),
+      conv2(5, 10, {3, 3}, {1, 1}, {0, 0}, {1, 1}, grid_size, 3, 0.1, 1.0, 1.0, torch::nn::SiLU(), 0.02, {-1, 1}, "cpu"),
       pool1(torch::nn::MaxPool2dOptions(2)),
       flatten(torch::nn::FlattenOptions()),
       linear1(torch::nn::LinearOptions(250, 10)) {

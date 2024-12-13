@@ -84,9 +84,9 @@
 #include <iostream>
 #include <torch/torch.h>
 // #include "architectures/conv_and_KAN.h"
-// #include "architectures/KANconv_and_MLP.h"
+#include "architectures/KANconv_and_MLP.h"
 // #include "architectures/KANconv_and_KAN.h"
-#include "architectures/convolution_cnn.h"
+// #include "architectures/convolution_cnn.h"
 
 
 void print_tensor(const torch::Tensor& tensor) {
@@ -98,7 +98,7 @@ void test_case_1() {
     int seed = 42;
     torch::manual_seed(seed);
 
-    Convolution_CNN model{};
+    KANC_MLP model(5);
     // model.eval();
 
     // Deterministic input
