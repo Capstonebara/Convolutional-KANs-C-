@@ -26,7 +26,16 @@ add_executable(CKan
         src/layers/KAN_linear.cpp
         include/layers/KAN_linear.h
         src/layers/KAN_convolution.cpp
-        include/layers/KAN_convolution.h)
+        include/layers/KAN_convolution.h
+        src/architectures/conv_and_KAN.cpp
+        include/architectures/conv_and_KAN.h
+        src/architectures/KANconv_and_MLP.cpp
+        include/architectures/KANconv_and_MLP.h
+        src/architectures/KANconv_and_KAN.cpp
+        include/architectures/KANconv_and_KAN.h
+        src/architectures/convolution_cnn.cpp
+        include/architectures/convolution_cnn.h
+)
 
 # Link the PyTorch library
 target_link_libraries(CKan "${TORCH_LIBRARIES}")

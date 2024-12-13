@@ -3,7 +3,6 @@
 
 #include <torch/torch.h>
 #include "../../include/layers/KAN_linear.h"
-#include "../../include/layers/convolution.h"
 
 class KAN_Convolution_Layer : public torch::nn::Module {
     public:
