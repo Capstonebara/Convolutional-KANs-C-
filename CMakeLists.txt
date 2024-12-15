@@ -35,6 +35,20 @@ add_executable(CKan
         include/architectures/KANconv_and_KAN.h
         src/architectures/convolution_cnn.cpp
         include/architectures/convolution_cnn.h
+        test/calc_out_dims/calc_out_dims_test.cpp
+        test/calc_out_dims/calc_out_dims_test.h
+        test/add_padding/add_padding_test.cpp
+        test/add_padding/add_padding_test.h
+        test/layers/KAN_convolution_test.cpp
+        test/layers/KAN_convolution_test.h
+        test/architecture/conv_and_KAN/conv_and_KAN_test.cpp
+        test/architecture/conv_and_KAN/conv_and_KAN_test.h
+        test/architecture/convolution_cnn/convolution_cnn_test.cpp
+        test/architecture/convolution_cnn/convolution_cnn_test.h
+        test/architecture/KANconv_and_KAN/KANconv_and_KAN_test.cpp
+        test/architecture/KANconv_and_KAN/KANconv_and_KAN_test.h
+        test/architecture/KANconv_and_MLP/KANconv_and_MLP_test.cpp
+        test/architecture/KANconv_and_MLP/KANconv_and_MLP_test.h
 )
 
 # Link the PyTorch library

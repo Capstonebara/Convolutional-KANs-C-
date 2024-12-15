@@ -1,6 +1,6 @@
 // #include <torch/torch.h>
 // #include <iostream>
-// #include <layers/convolution.h>
+#include <layers/convolution.h>
 // #include <layers/KAN_linear.h>
 // #include <layers/KAN_convolution.h>
 
@@ -89,28 +89,25 @@
 // #include "architectures/convolution_cnn.h"
 
 
-void print_tensor(const torch::Tensor& tensor) {
-    std::cout << tensor << std::endl;
-}
+// void print_tensor(const torch::Tensor& tensor) {
+//     std::cout << tensor << std::endl;
+// }
 
-void test_case_1() {
+// void test_case_1() {
+//
+// }
 
-    int seed = 42;
-    torch::manual_seed(seed);
-
-    KANC_MLP model(5);
-    // model.eval();
-
-    // Deterministic input
-    auto input_tensor = torch::ones({1, 1, 28, 28});
-    auto output = model.forward(input_tensor);
-    std::cout << "Test Case 1 Output: ";
-    print_tensor(output);
-}
+#include <../test/calc_out_dims/calc_out_dims_test.h>
+#include <../test/add_padding/add_padding_test.h>
+#include "test/layers/KAN_convolution_test.h"
+#include "../test/architecture/conv_and_KAN/conv_and_KAN_test.h"
+#include "../test/architecture/convolution_cnn/convolution_cnn_test.h"
+#include "../test/architecture/KANconv_and_KAN/KANconv_and_KAN_test.h"
+#include "../test/architecture/KANconv_and_MLP/KANconv_and_MLP_test.h"
 
 int main() {
     // Run test case
-    test_case_1();
+    KANconv_and_MLP_test();
 
     return 0;
 }
