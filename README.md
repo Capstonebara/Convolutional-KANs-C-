@@ -12,7 +12,7 @@
 
 ## 🧑‍💻 Introduction
 
-- Developed Convolutional Kernel Attention Networks (Convolutional-KAN) in C++ using LibTorch, converting the original Python implementation in PyTorch for compatibility with embedded systems.
+- Developed Convolutional Kolmogorov-Arnold Networks (KAN) in C++ using LibTorch, converting the original Python implementation in PyTorch for compatibility with embedded systems.
 - Optimized the model for deployment on resource-constrained devices, focusing on efficient memory usage, real-time processing, and maintaining high accuracy.
 - The C++ version is tailored for embedded systems and high-performance environments, providing scalable solutions for neural network tasks.
 
